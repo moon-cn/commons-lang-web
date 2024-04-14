@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
  * 查询条件
  * 多对多可 可使用 containsAnyMember
  */
-public class Query implements Specification {
+public class Query<T> implements Specification<T> {
 
     private final List<Specification> specificationList = new ArrayList<>();
 
@@ -140,7 +140,6 @@ public class Query implements Specification {
 
     public void like(String column, Object val) {
         if (val == null) {
-            this.eq(column, null);
             return;
         }
 

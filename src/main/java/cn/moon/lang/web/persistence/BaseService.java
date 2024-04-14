@@ -1,54 +1,57 @@
 package cn.moon.lang.web.persistence;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Transactional
-public class BaseService<T> {
+public abstract class BaseService<T> {
+
+
 
     @Autowired
-    protected JpaRepository<T,String> baseDao;
+    protected BaseRepository<T> repository;
 
 
     public T findOne(String id) {
-       return baseDao.findById(id).orElse(null);
+       return repository.findById(id).orElse(null);
     }
 
     public T save(T t) {
-     return   baseDao.save(t);
+     return   repository.save(t);
     }
 
 
     public List<T> findAll(){
-        return baseDao.findAll();
+        return repository.findAll();
     }
 
     public Page<T> findAll(Pageable pageable) {
-     return    baseDao.findAll(pageable);
+     return    repository.findAll(pageable);
     }
 
 
     public List<T> findAll(Sort sort) {
-        return    baseDao.findAll(sort);
-    }
-
-    public Page<T> findAll(T exampleBean, Pageable pageable) {
-        return baseDao.findAll(Example.of(exampleBean), pageable);
+        return    repository.findAll(sort);
     }
 
 
-    public Page<T> findAll(Example<T> example, Pageable pageable) {
-        return baseDao.findAll(example, pageable);
+
+
+    public Page<T> findAll(Specification<T> s, Pageable pageable) {
+        return repository.findAll(s, pageable);
+    }
+
+    public List<T> findAll(Specification<T> s, Sort sort) {
+        return repository.findAll(s, sort);
     }
 
     public void deleteById(String id) {
-        baseDao.deleteById(id);
+        repository.deleteById(id);
     }
 }

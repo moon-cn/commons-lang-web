@@ -1,10 +1,7 @@
 package cn.moon.lang.web;
 
 import cn.hutool.core.util.StrUtil;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -14,7 +11,7 @@ import java.util.function.Function;
 
 @Getter
 @Setter
-@AllArgsConstructor
+@Builder
 public class Option {
     String label;
     Object value;

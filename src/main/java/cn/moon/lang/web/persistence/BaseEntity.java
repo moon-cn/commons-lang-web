@@ -1,4 +1,4 @@
-package cn.moon.lang.web.db;
+package cn.moon.lang.web.persistence;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;

@@ -22,7 +22,7 @@ public class Result {
     }
 
     public static Result ok() {
-        return  new Result();
+        return new Result();
     }
 
     public static Result err() {
@@ -34,14 +34,17 @@ public class Result {
     }
 
     public Result data(Object data) {
-        this.setData(data);
+        this.data = data;
         return this;
     }
 
     public Result msg(String msg) {
-        this.setMessage(msg);
+        this.message = msg;
         return this;
     }
 
-
+    public Result code(int code) {
+        this.code = code;
+        return this;
+    }
 }

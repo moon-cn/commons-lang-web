@@ -60,7 +60,7 @@ public class HumanExceptionTool {
             String message = v.getMessage();
             sb.append(property);
             sb.append(message);
-            sb.append(" \r\n");
+            sb.append("；");
         }
 
         return sb.toString();

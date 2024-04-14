@@ -1,6 +1,5 @@
 package cn.moon.lang.web;
 
-import cn.hutool.core.util.StrUtil;
 import lombok.*;
 
 import java.util.ArrayList;
@@ -11,10 +10,17 @@ import java.util.function.Function;
 
 @Getter
 @Setter
-@Builder
 public class Option {
     String label;
     Object value;
+
+
+    public static Option valueLabel(Object value, String label) {
+        Option option = new Option();
+        option.value = value;
+        option.label = label;
+        return option;
+    }
 
 
     // 兼容性处理
@@ -26,11 +32,11 @@ public class Option {
         List<Option> result = new ArrayList<>();
         Iterator<T> ite = list.iterator();
 
-        while(ite.hasNext()) {
+        while (ite.hasNext()) {
             T t = ite.next();
             String label = labelFn.apply(t);
             Object value = valueFn.apply(t);
-            result.add(new Option(label, value));
+            result.add(Option.valueLabel(value, label));
         }
 
         return result;

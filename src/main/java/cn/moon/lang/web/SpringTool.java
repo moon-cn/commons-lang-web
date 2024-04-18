@@ -9,7 +9,6 @@ import org.springframework.stereotype.Component;
 import java.util.Collection;
 import java.util.Map;
 
-@Component
 public class SpringTool implements ApplicationContextAware {
 
 

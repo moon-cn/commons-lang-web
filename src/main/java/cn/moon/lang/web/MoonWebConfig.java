@@ -6,7 +6,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class MoonWebConfig {
 
-    @Bean
+    @Bean(name = "moon_spring_tool")
     public SpringTool springTool(){
         return new SpringTool();
     }

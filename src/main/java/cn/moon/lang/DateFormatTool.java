@@ -7,19 +7,22 @@ import java.util.Date;
 public class DateFormatTool {
 
     public static String format(Date date){
-        SimpleDateFormat sdf = new SimpleDateFormat( "yyyy-MM-dd HH:mm:ss");
-        return sdf.format(date);
+        return format(date,"yyyy-MM-dd HH:mm:ss");
     }
 
     public static String formatDay(Date date){
-        SimpleDateFormat sdf = new SimpleDateFormat( "yyyy-MM-dd");
-
-        return sdf.format(date);
+        return format(date,"yyyy-MM-dd");
     }
     public static String formatDayCn(Date date){
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy年M月d日");
-        return sdf.format(date);
+        return format(date,"yyyy年M月d日");
     }
 
+    public static String format(Date date,String fmt){
+        if(date == null){
+            return null;
+        }
+        SimpleDateFormat sdf = new SimpleDateFormat( fmt);
+        return sdf.format(date);
+    }
 
 }

@@ -1,23 +1,30 @@
-package cn.moon.lang.web.exception;
+package cn.moon.lang.web;
 
 import cn.hutool.core.util.StrUtil;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.transaction.TransactionSystemException;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 
 import javax.persistence.RollbackException;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 import java.sql.SQLIntegrityConstraintViolationException;
+import java.util.List;
 import java.util.Set;
 
 /**
  * 将异常转为人类可读的字符串
  */
-public class HumanExceptionTool {
+public class ExceptionHumanTool {
 
-    public String covert(Exception e) {
+    public static String covert(Exception e) {
+        if(e instanceof MethodArgumentNotValidException){
+            return  getHumanMessage((MethodArgumentNotValidException)e);
+        }
+
         if (e instanceof ConstraintViolationException) {
             return getHumanMessage((ConstraintViolationException) e);
         }
@@ -27,8 +34,7 @@ public class HumanExceptionTool {
                 if (cause != null) {
                     Throwable cause2 = cause.getCause();
                     if (cause2 instanceof ConstraintViolationException) {
-                        String humanMessage = getHumanMessage((ConstraintViolationException) cause2);
-                        return humanMessage;
+                        return getHumanMessage((ConstraintViolationException) cause2);
                     }
                 }
             }
@@ -39,10 +45,10 @@ public class HumanExceptionTool {
         }
 
         if (e instanceof MissingServletRequestParameterException) {
-            return missParamException((MissingServletRequestParameterException) e);
+            return getHumanMessage((MissingServletRequestParameterException) e);
         }
         if(e instanceof DataIntegrityViolationException ){
-          return   dataIntegrityViolationException((DataIntegrityViolationException) e);
+          return   getHumanMessage((DataIntegrityViolationException) e);
 
         }
 
@@ -51,7 +57,24 @@ public class HumanExceptionTool {
         return msg;
     }
 
-    private String getHumanMessage(ConstraintViolationException e) {
+    private static String getHumanMessage(MethodArgumentNotValidException e) {
+        StringBuilder sb = new StringBuilder();
+        List<FieldError> errors = e.getBindingResult().getFieldErrors();
+        for (FieldError error : errors) {
+            String field = error.getField();
+            String msg = error.getDefaultMessage();
+            sb.append("错误[").append(field).append("]:").append(msg).append(";\n");
+        }
+
+        if(sb.length() > 0){
+            sb.deleteCharAt(sb.length() -1);
+            sb.deleteCharAt(sb.length() -1);
+        }
+
+        return sb.toString();
+    }
+
+    private  static String getHumanMessage(ConstraintViolationException e) {
         Set<ConstraintViolation<?>> constraintViolations = e.getConstraintViolations();
         StringBuilder sb = new StringBuilder();
 
@@ -66,7 +89,7 @@ public class HumanExceptionTool {
         return sb.toString();
     }
 
-    public String dataIntegrityViolationException(DataIntegrityViolationException e) {
+    private static String getHumanMessage(DataIntegrityViolationException e) {
         if (e != null && e.getCause() != null && e.getCause().getCause() != null) {
             Throwable ex = e.getCause().getCause();
             String msg = ex.getMessage();
@@ -94,7 +117,7 @@ public class HumanExceptionTool {
     /**
      * 请求参数缺失异常
      */
-    public String missParamException(MissingServletRequestParameterException e) {
+    private static String getHumanMessage(MissingServletRequestParameterException e) {
         String parameterType = e.getParameterType();
         String parameterName = e.getParameterName();
         String message = StrUtil.format(">>> 缺少请求的参数{}，类型为{}", parameterName, parameterType);

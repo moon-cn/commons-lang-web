@@ -1,2 +1,2 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-cn.moon.lang.web.MoonWebConfig
+cn.moon.lang.web.WebConfigMoonImpl

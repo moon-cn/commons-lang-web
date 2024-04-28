@@ -21,8 +21,12 @@ import java.util.Set;
 public class ExceptionHumanTool {
 
     public static String covert(Exception e) {
-        if(e instanceof MethodArgumentNotValidException){
-            return  getHumanMessage((MethodArgumentNotValidException)e);
+        if (e instanceof NullPointerException) {
+            return "服务器忙";
+        }
+
+        if (e instanceof MethodArgumentNotValidException) {
+            return getHumanMessage((MethodArgumentNotValidException) e);
         }
 
         if (e instanceof ConstraintViolationException) {
@@ -47,8 +51,8 @@ public class ExceptionHumanTool {
         if (e instanceof MissingServletRequestParameterException) {
             return getHumanMessage((MissingServletRequestParameterException) e);
         }
-        if(e instanceof DataIntegrityViolationException ){
-          return   getHumanMessage((DataIntegrityViolationException) e);
+        if (e instanceof DataIntegrityViolationException) {
+            return getHumanMessage((DataIntegrityViolationException) e);
 
         }
 
@@ -66,15 +70,15 @@ public class ExceptionHumanTool {
             sb.append("错误[").append(field).append("]:").append(msg).append(";\n");
         }
 
-        if(sb.length() > 0){
-            sb.deleteCharAt(sb.length() -1);
-            sb.deleteCharAt(sb.length() -1);
+        if (sb.length() > 0) {
+            sb.deleteCharAt(sb.length() - 1);
+            sb.deleteCharAt(sb.length() - 1);
         }
 
         return sb.toString();
     }
 
-    private  static String getHumanMessage(ConstraintViolationException e) {
+    private static String getHumanMessage(ConstraintViolationException e) {
         Set<ConstraintViolation<?>> constraintViolations = e.getConstraintViolations();
         StringBuilder sb = new StringBuilder();
 
@@ -104,7 +108,7 @@ public class ExceptionHumanTool {
                     return "数据重复,操作不能继续进行。 " + msg;
                 }
 
-                if(msg.contains("cannot be null")){
+                if (msg.contains("cannot be null")) {
                     return "数据不能为空。" + msg;
                 }
 

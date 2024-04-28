@@ -8,7 +8,7 @@
 
     <groupId>io.github.moon-cn</groupId>
     <artifactId>commons-lang-web</artifactId>
-    <version>1.0.8</version>
+    <version>1.0.9</version>
     <description>web 项目常用代码</description>
     <url>https://github.com/moon-cn/commons-lang-web</url>
     <licenses>

@@ -8,7 +8,7 @@
 
     <groupId>io.github.moon-cn</groupId>
     <artifactId>commons-lang-web</artifactId>
-    <version>1.0.9</version>
+    <version>1.0.10</version>
     <description>web 项目常用代码</description>
     <url>https://github.com/moon-cn/commons-lang-web</url>
     <licenses>
@@ -24,9 +24,9 @@
         </developer>
     </developers>
     <scm>
-        <connection>scm:git:git://github.com/moon1949/commons-lang-web.git</connection>
-        <developerConnection>scm:git@github.com:moon1949/commons-lang-web.git</developerConnection>
-        <url>https://github.com/moon1949/commons-lang-web/tree/master</url>
+        <connection>scm:git:git://github.com/moon-cn/commons-lang-web.git</connection>
+        <developerConnection>scm:git@github.com:moon-cn/commons-lang-web.git</developerConnection>
+        <url>https://github.com/moon-cn/commons-lang-web/tree/master</url>
     </scm>
 
     <properties>

@@ -92,4 +92,36 @@ public class StrTool {
     public static boolean isNotBlank(String str) {
         return str != null && !str.isEmpty() && !str.trim().isEmpty();
     }
+
+
+    public static String toUnderlineCase(String str) {
+        if (str == null) {
+            return null;
+        }
+
+        StringBuilder sb = new StringBuilder();
+        boolean upperCase = false;
+        for (int i = 0; i < str.length(); i++) {
+            char c = str.charAt(i);
+
+            boolean nextUpperCase = true;
+
+            if (i < (str.length() - 1)) {
+                nextUpperCase = Character.isUpperCase(str.charAt(i + 1));
+            }
+
+            if ((i > 0) && Character.isUpperCase(c)) {
+                if (!upperCase || !nextUpperCase) {
+                    sb.append('_');
+                }
+                upperCase = true;
+            } else {
+                upperCase = false;
+            }
+
+            sb.append(Character.toLowerCase(c));
+        }
+
+        return sb.toString();
+    }
 }
